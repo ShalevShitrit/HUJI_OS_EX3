@@ -6,7 +6,7 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.24"
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "HUJI_OS_EX3::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-HUJI_OS_EX3-Debug-bc0c604d88e35f6a6bde.json",
+					"jsonFile" : "target-HUJI_OS_EX3-Debug-66e8735a40bb515ba983.json",
 					"name" : "HUJI_OS_EX3",
 					"projectIndex" : 0
 				}
@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/Users/shalevshitrit/Documents/GitHub/HUJI_OS_EX3/cmake-build-debug",
-		"source" : "/Users/shalevshitrit/Documents/GitHub/HUJI_OS_EX3"
+		"build" : "C:/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug",
+		"source" : "C:/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 4
+		"minor" : 6
 	}
 }
