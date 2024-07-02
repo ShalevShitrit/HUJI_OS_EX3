@@ -34,7 +34,9 @@ void Barrier::barrier()
 			fprintf(stderr, "[[Barrier]] error on pthread_cond_wait");
 			exit(1);
 		}
-	} else {
+	}
+	else
+	{
 		count = 0;
 		if (pthread_cond_broadcast(&cv) != 0) {
 			fprintf(stderr, "[[Barrier]] error on pthread_cond_broadcast");
