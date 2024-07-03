@@ -1,9 +1,9 @@
-#include "MapReduceFramework.h"
+#include "../MapReduceFramework.h"
 #include <cstdio>
 #include <string>
 #include <array>
 #include <unistd.h>
-
+#include <iostream>
 class VString : public V1 {
 public:
 	VString(std::string content) : content(content) { }
@@ -47,21 +47,24 @@ public:
 			usleep(150000);
 			emit2(k2, v2, context);
 		}
+
 	}
 
 	virtual void reduce(const IntermediateVec* pairs, 
-		void* context) const {
-		const char c = static_cast<const KChar*>(pairs->at(0).first)->c;
-		int count = 0;
-		for(const IntermediatePair& pair: *pairs) {
-			count += static_cast<const VCount*>(pair.second)->count;
-			delete pair.first;
-			delete pair.second;
-		}
-		KChar* k3 = new KChar(c);
-		VCount* v3 = new VCount(count);
-		usleep(150000);
-		emit3(k3, v3, context);
+		void* context) const
+	{
+		// 	const char c = static_cast<const KChar*>(pairs->at(0).first)->c;
+		// 	int count = 0;
+		// 	for(const IntermediatePair& pair: *pairs) {
+		// 		count += static_cast<const VCount*>(pair.second)->count;
+		// 		delete pair.first;
+		// 		delete pair.second;
+		// 	}
+		// 	KChar* k3 = new KChar(c);
+		// 	VCount* v3 = new VCount(count);
+		// 	usleep(150000);
+		// 	emit3(k3, v3, context);
+		// }
 	}
 };
 
@@ -80,6 +83,7 @@ int main(int argc, char** argv)
 	JobState state;
     JobState last_state={UNDEFINED_STAGE,0};
 	JobHandle job = startMapReduceJob(client, inputVec, outputVec, 4);
+	std::cout << "here" << std::endl;
 	getJobState(job, &state);
     
 	while (state.stage != REDUCE_STAGE || state.percentage != 100.0)

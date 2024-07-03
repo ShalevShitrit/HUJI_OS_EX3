@@ -86,6 +86,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Barrier/Barrier.cpp">
+			<Option target="HUJI_OS_EX3"/>
+		</Unit>
+		<Unit filename="C:/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Barrier/Barrier.h">
+			<Option target="HUJI_OS_EX3"/>
+		</Unit>
 		<Unit filename="C:/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/MapReduceClient.h">
 			<Option target="HUJI_OS_EX3"/>
 		</Unit>
@@ -93,6 +99,9 @@
 			<Option target="HUJI_OS_EX3"/>
 		</Unit>
 		<Unit filename="C:/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/MapReduceFramework.h">
+			<Option target="HUJI_OS_EX3"/>
+		</Unit>
+		<Unit filename="C:/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Sample Client/MapReduceFramework.h">
 			<Option target="HUJI_OS_EX3"/>
 		</Unit>
 		<Unit filename="C:/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Sample Client/SampleClient.cpp">

@@ -8,5 +8,9 @@ include_directories(.)
 add_executable(HUJI_OS_EX3
         "Sample Client/SampleClient.cpp"
         MapReduceClient.h
-        MapReduceFramework.h
-        MapReduceFramework.cpp)
+        "Sample Client/MapReduceFramework.h"
+        MapReduceFramework.cpp
+        "Barrier/Barrier.cpp"
+        "Barrier/Barrier.h"
+
+        )

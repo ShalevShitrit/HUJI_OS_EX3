@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.obj"
+  "CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.obj.d"
   "CMakeFiles/HUJI_OS_EX3.dir/MapReduceFramework.cpp.obj"
   "CMakeFiles/HUJI_OS_EX3.dir/MapReduceFramework.cpp.obj.d"
   "CMakeFiles/HUJI_OS_EX3.dir/Sample_Client/SampleClient.cpp.obj"

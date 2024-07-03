@@ -128,6 +128,30 @@ HUJI_OS_EX3/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\HUJI_OS_EX3.dir\build.make CMakeFiles/HUJI_OS_EX3.dir/build
 .PHONY : HUJI_OS_EX3/fast
 
+Barrier/Barrier.obj: Barrier/Barrier.cpp.obj
+.PHONY : Barrier/Barrier.obj
+
+# target to build an object file
+Barrier/Barrier.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\HUJI_OS_EX3.dir\build.make CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.obj
+.PHONY : Barrier/Barrier.cpp.obj
+
+Barrier/Barrier.i: Barrier/Barrier.cpp.i
+.PHONY : Barrier/Barrier.i
+
+# target to preprocess a source file
+Barrier/Barrier.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\HUJI_OS_EX3.dir\build.make CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.i
+.PHONY : Barrier/Barrier.cpp.i
+
+Barrier/Barrier.s: Barrier/Barrier.cpp.s
+.PHONY : Barrier/Barrier.s
+
+# target to generate assembly for a file
+Barrier/Barrier.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\HUJI_OS_EX3.dir\build.make CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.s
+.PHONY : Barrier/Barrier.cpp.s
+
 MapReduceFramework.obj: MapReduceFramework.cpp.obj
 .PHONY : MapReduceFramework.obj
 
@@ -185,6 +209,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... HUJI_OS_EX3
+	@echo ... Barrier/Barrier.obj
+	@echo ... Barrier/Barrier.i
+	@echo ... Barrier/Barrier.s
 	@echo ... MapReduceFramework.obj
 	@echo ... MapReduceFramework.i
 	@echo ... MapReduceFramework.s
