@@ -1,17 +1,18 @@
 //
 // Created by omer1 on 02/07/2024.
 //
-#include "MapReduceFramework.h"
+#include "../MapReduceFramework.h"
 #include <pthread.h>
 #include <atomic>
 #include <iostream>
 #include <bitset> // todo remove
 #include <cstdint> // todo remove
-#include "Barrier/Barrier.h"
+#include "../Barrier/Barrier.h"
 #define SYS_MSG_ERR_PREFIX "system error: "
 #define PTHREAD_CREATE_MSG_ERR "creating thread failed."
 #define ALLOC_MSG_ERR "memory allocation failed."
 #define PTHREAD_JOIN_MSG_ERR "pthred join failed."
+#define GET_COUNT & (static_cast<uint64_t>(0xffffffff) >> 1)
 // todo: free all allocations before exit(1)
 struct JobContext;
 void
@@ -32,7 +33,6 @@ struct ThreadContext
 
 struct JobContext
 {
-    JobState* state;
     pthread_t* threads;
     ThreadContext* thread_contexts;
     int num_threads;
@@ -40,7 +40,7 @@ struct JobContext
     pthread_mutex_t emit3;
     pthread_mutex_t reduce;
     const MapReduceClient* client;
-    std::atomic<uint64_t>* atomic_counter;
+    std::atomic<uint64_t> atomic_counter;
     OutputVec* output_vec;
     const InputVec* input_vec;
     bool calledWait;
@@ -48,19 +48,18 @@ struct JobContext
 
 void emit2(K2* key, V2* value, void* context)
 {
-    std::cout<<"emit start" << std::endl;
+    std::cout << "emit start" << std::endl;
 
-    ThreadContext* tc = static_cast<ThreadContext*> (context);
+    ThreadContext* tc = static_cast<ThreadContext*>(context);
     // todo: need to check if null?
-    tc->intermediate_vec->emplace_back(key,value);
-    for(int i = 0;tc->intermediate_vec->size();i++)
+    tc->intermediate_vec->emplace_back(key, value);
+    for (int i = 0; tc->intermediate_vec->size(); i++)
     {
         std::cout << "(" << (tc->intermediate_vec->at(i).first) << ", "
-                 << (tc->intermediate_vec->at(i).second) << ") ";
+            << (tc->intermediate_vec->at(i).second) << ") ";
     }
     std::cout << std::endl;
-    std::cout<<"emit finished" << std::endl;
-
+    std::cout << "emit finished" << std::endl;
 }
 
 void emit3(K3* key, V3* value, void* context)
@@ -82,11 +81,11 @@ JobHandle startMapReduceJob(const MapReduceClient& client,
         jobContext->thread_contexts[i].job_context = jobContext;
     }
     // starts the map stage
-    set_counter(jobContext->atomic_counter, MAP_STAGE, inputVec.size());
+    set_counter(&jobContext->atomic_counter, MAP_STAGE, inputVec.size());
 
     for (int i = 0; i < multiThreadLevel; ++i)
     {
-         if (pthread_create(&jobContext->threads[i], nullptr, wrappingFunc, &jobContext->thread_contexts[i])
+        if (pthread_create(&jobContext->threads[i], nullptr, wrappingFunc, &jobContext->thread_contexts[i])
             != 0)
         {
             std::cout << SYS_MSG_ERR_PREFIX << PTHREAD_CREATE_MSG_ERR << std::endl;
@@ -118,18 +117,18 @@ void waitForJob(JobHandle job)
 
 void getJobState(JobHandle job, JobState* state)
 {
-    std::cout<<"job state started" << std::endl;
+    std::cout << "job state started" << std::endl;
     JobContext* job_context = static_cast<JobContext*>(job);
 
-    uint64_t cur_atomic = (job_context->atomic_counter->load());
-    uint64_t cur_count = (cur_atomic & (static_cast<uint64_t>(0xffffffff) >> 1));
+    uint64_t cur_atomic = (job_context->atomic_counter.load());
+    uint64_t cur_count = (cur_atomic GET_COUNT);
     uint64_t cur_stage = (cur_atomic >> 62);
 
-    uint64_t total_work = (job_context->input_vec->size() >> 31 ) &  ((static_cast<uint64_t>(0xffffffff) >> 1));
+    uint64_t total_work = (job_context->input_vec->size() << 31) & ((static_cast<uint64_t>(0xffffffff) >> 1));
 
-    if(cur_stage == UNDEFINED_STAGE)
+    if (cur_stage == UNDEFINED_STAGE)
     {
-        std::cout<<"job state middle" << std::endl;
+        std::cout << "job state middle" << std::endl;
 
         state->percentage = 0;
         state->stage = UNDEFINED_STAGE;
@@ -139,15 +138,14 @@ void getJobState(JobHandle job, JobState* state)
 
     state->percentage = (static_cast<float>(cur_count) / static_cast<float>(total_work)) * 100;
     state->stage = static_cast<stage_t>(cur_stage);
-    std::cout<<"job state finished" << std::endl;
-
+    std::cout << "job state finished" << std::endl;
 }
 
 
 void closeJobHandle(JobHandle job)
 {
     JobContext* jobContext = static_cast<JobContext*>(job);
-    if(jobContext == nullptr)
+    if (jobContext == nullptr)
     {
         return;
     }
@@ -161,7 +159,6 @@ void closeJobHandle(JobHandle job)
     delete[] jobContext->thread_contexts;
     delete[] jobContext->threads;
     delete jobContext->barrier;
-    delete jobContext->atomic_counter;
     pthread_mutex_destroy(&jobContext->emit3);
     pthread_mutex_destroy(&jobContext->reduce);
     delete jobContext;
@@ -170,30 +167,29 @@ void closeJobHandle(JobHandle job)
 // HELPER functions
 void* wrappingFunc(void* arg)
 {
-
     mapping(arg);
     return nullptr;
 }
 
 void* mapping(void* arg)
 {
-    std::cout<<"map started " << std::endl;
 
     ThreadContext* tc = static_cast<ThreadContext*>(arg);
     const InputVec& inputVec = *(tc->job_context->input_vec);
 
     while (true)
     {
-        uint64_t old_val = *(tc->job_context->atomic_counter);
-        tc->job_context->atomic_counter++;
+        // need to get only the value of the counter
+        uint64_t old_val = (tc->job_context->atomic_counter)++ GET_COUNT;
+        std::cout << "new val " << tc->job_context->atomic_counter.load() <<std::endl;
         if (old_val >= inputVec.size())
         {
             break;
         }
-
+        std::cout << "old_val" << old_val <<std::endl;
         tc->job_context->client->map(inputVec[old_val].first, inputVec[old_val].second, tc);
     }
-    std::cout<<"map end " << std::endl;
+    std::cout << "map end " << std::endl;
 
 
     return nullptr;
@@ -210,18 +206,13 @@ void init_job_context(const MapReduceClient& client, const InputVec
 
     jobContext->num_threads = multiThreadLevel;
 
-    jobContext->state = new JobState;
-    check_allocation_pointer(jobContext->state);
-    jobContext->state->stage = UNDEFINED_STAGE;
-    jobContext->state->percentage = 0;
-
     jobContext->client = &client;
     jobContext->input_vec = &inputVec;
     jobContext->output_vec = &outputVec;
     jobContext->calledWait = false;
 
-    jobContext->atomic_counter = new std::atomic<uint64_t>(0);
-    check_allocation_pointer((void*)(jobContext->atomic_counter));
+    jobContext->atomic_counter =  {0};//TODO:CHANGED FROM POINTER TO VALUE
+
 
     jobContext->barrier = new Barrier(multiThreadLevel);
     // todo: update mutex
@@ -247,8 +238,6 @@ void set_counter(std::atomic<uint64_t>* atomic_counter, stage_t stage,
     // Zero the first 62 bits and preserve the last 2 bits
     uint64_t new_value =
         static_cast<uint64_t>(stage) << 62 & static_cast<uint64_t>(0x03) << 62;
-    new_value  = new_value | ((static_cast<uint64_t>(total_work)<<31));
+    new_value = new_value | ((static_cast<uint64_t>(total_work) << 31));
     atomic_counter->store(new_value);
-
 }
-
