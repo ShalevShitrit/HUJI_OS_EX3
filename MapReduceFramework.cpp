@@ -143,6 +143,7 @@ void getJobState(JobHandle job, JobState* state)
 
 }
 
+
 void closeJobHandle(JobHandle job)
 {
     JobContext* jobContext = static_cast<JobContext*>(job);
