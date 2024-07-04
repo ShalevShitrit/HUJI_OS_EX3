@@ -1,28 +1,33 @@
 //
 // Created by omer1 on 02/07/2024.
 //
-#include "../MapReduceFramework.h"
+#include "MapReduceFramework.h"
 #include <pthread.h>
 #include <atomic>
 #include <iostream>
 #include <bitset> // todo remove
 #include <cstdint> // todo remove
-#include "../Barrier/Barrier.h"
+#include<algorithm>
+#include "Barrier/Barrier.h"
 #define SYS_MSG_ERR_PREFIX "system error: "
 #define PTHREAD_CREATE_MSG_ERR "creating thread failed."
 #define ALLOC_MSG_ERR "memory allocation failed."
 #define PTHREAD_JOIN_MSG_ERR "pthred join failed."
-#define GET_COUNT & (static_cast<uint64_t>(0xffffffff) >> 1)
+#define GET_COUNT &( static_cast<uint64_t>(0x7fffffff))
 // todo: free all allocations before exit(1)
 struct JobContext;
+struct ThreadContext;
 void
+
 init_job_context(const MapReduceClient& client, const InputVec& inputVec, OutputVec& outputVec,
                  int multiThreadLevel, JobContext*& jobContext);
 void check_allocation_pointer(void* pointer);
 void* threadMapWrapper(void* arg);
 void* mapping(void* arg);
 void* wrappingFunc(void* arg);
-void set_counter(std::atomic<uint64_t>* atomic_counter, stage_t stage, uint64_t total_work);
+void set_counter(std::atomic<uint64_t>* atomic_counter, stage_t stage, uint64_t total_work,
+                 std::atomic<uint32_t>* started);
+void sorting(ThreadContext* tc);
 
 struct ThreadContext
 {
@@ -34,13 +39,14 @@ struct ThreadContext
 struct JobContext
 {
     pthread_t* threads;
-    ThreadContext* thread_contexts;
+    ThreadContext* thread_contexts; // to do change to vector ?
     int num_threads;
     const Barrier* barrier;
     pthread_mutex_t emit3;
     pthread_mutex_t reduce;
     const MapReduceClient* client;
     std::atomic<uint64_t> atomic_counter;
+    std::atomic<uint32_t> started;
     OutputVec* output_vec;
     const InputVec* input_vec;
     bool calledWait;
@@ -48,18 +54,8 @@ struct JobContext
 
 void emit2(K2* key, V2* value, void* context)
 {
-    std::cout << "emit start" << std::endl;
-
     ThreadContext* tc = static_cast<ThreadContext*>(context);
-    // todo: need to check if null?
     tc->intermediate_vec->emplace_back(key, value);
-    for (int i = 0; tc->intermediate_vec->size(); i++)
-    {
-        std::cout << "(" << (tc->intermediate_vec->at(i).first) << ", "
-            << (tc->intermediate_vec->at(i).second) << ") ";
-    }
-    std::cout << std::endl;
-    std::cout << "emit finished" << std::endl;
 }
 
 void emit3(K3* key, V3* value, void* context)
@@ -81,7 +77,7 @@ JobHandle startMapReduceJob(const MapReduceClient& client,
         jobContext->thread_contexts[i].job_context = jobContext;
     }
     // starts the map stage
-    set_counter(&jobContext->atomic_counter, MAP_STAGE, inputVec.size());
+    set_counter(&jobContext->atomic_counter, MAP_STAGE, inputVec.size(), &jobContext->started);
 
     for (int i = 0; i < multiThreadLevel; ++i)
     {
@@ -117,28 +113,23 @@ void waitForJob(JobHandle job)
 
 void getJobState(JobHandle job, JobState* state)
 {
-    std::cout << "job state started" << std::endl;
     JobContext* job_context = static_cast<JobContext*>(job);
 
     uint64_t cur_atomic = (job_context->atomic_counter.load());
     uint64_t cur_count = (cur_atomic GET_COUNT);
     uint64_t cur_stage = (cur_atomic >> 62);
 
-    uint64_t total_work = (job_context->input_vec->size() << 31) & ((static_cast<uint64_t>(0xffffffff) >> 1));
+    uint64_t total_work = (cur_atomic >> 31) GET_COUNT;
 
     if (cur_stage == UNDEFINED_STAGE)
     {
-        std::cout << "job state middle" << std::endl;
-
         state->percentage = 0;
         state->stage = UNDEFINED_STAGE;
         return;
     }
 
-
     state->percentage = (static_cast<float>(cur_count) / static_cast<float>(total_work)) * 100;
     state->stage = static_cast<stage_t>(cur_stage);
-    std::cout << "job state finished" << std::endl;
 }
 
 
@@ -168,29 +159,27 @@ void closeJobHandle(JobHandle job)
 void* wrappingFunc(void* arg)
 {
     mapping(arg);
+    // setting barrier
     return nullptr;
 }
 
 void* mapping(void* arg)
 {
-
     ThreadContext* tc = static_cast<ThreadContext*>(arg);
     const InputVec& inputVec = *(tc->job_context->input_vec);
 
     while (true)
     {
         // need to get only the value of the counter
-        uint64_t old_val = (tc->job_context->atomic_counter)++ GET_COUNT;
-        std::cout << "new val " << tc->job_context->atomic_counter.load() <<std::endl;
+        uint64_t old_val = (tc->job_context->started)++;
         if (old_val >= inputVec.size())
         {
             break;
         }
-        std::cout << "old_val" << old_val <<std::endl;
         tc->job_context->client->map(inputVec[old_val].first, inputVec[old_val].second, tc);
+        tc->job_context->atomic_counter.fetch_add(1);
+        sorting(tc);
     }
-    std::cout << "map end " << std::endl;
-
 
     return nullptr;
 }
@@ -211,7 +200,8 @@ void init_job_context(const MapReduceClient& client, const InputVec
     jobContext->output_vec = &outputVec;
     jobContext->calledWait = false;
 
-    jobContext->atomic_counter =  {0};//TODO:CHANGED FROM POINTER TO VALUE
+    jobContext->atomic_counter = {0}; //TODO:CHANGED FROM POINTER TO VALUE
+    jobContext->started = {0};
 
 
     jobContext->barrier = new Barrier(multiThreadLevel);
@@ -233,11 +223,21 @@ void check_allocation_pointer(void* pointer)
 }
 
 void set_counter(std::atomic<uint64_t>* atomic_counter, stage_t stage,
-                 uint64_t total_work)
+                 uint64_t total_work, std::atomic<uint32_t>* started)
 {
     // Zero the first 62 bits and preserve the last 2 bits
     uint64_t new_value =
         static_cast<uint64_t>(stage) << 62 & static_cast<uint64_t>(0x03) << 62;
     new_value = new_value | ((static_cast<uint64_t>(total_work) << 31));
     atomic_counter->store(new_value);
+    started->store(0);
+}
+
+void sorting(ThreadContext* tc)
+{
+    IntermediateVec* intermediate_vec = tc->intermediate_vec;
+    std::sort(intermediate_vec->begin(),
+              intermediate_vec->end(),
+              [](const IntermediatePair& a, const IntermediatePair& b) { return *a.first < *b.first; });
+    // locking
 }
