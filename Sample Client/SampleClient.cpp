@@ -53,19 +53,19 @@ public:
 	virtual void reduce(const IntermediateVec* pairs, 
 		void* context) const
 	{
-		// 	const char c = static_cast<const KChar*>(pairs->at(0).first)->c;
-		// 	int count = 0;
-		// 	for(const IntermediatePair& pair: *pairs) {
-		// 		count += static_cast<const VCount*>(pair.second)->count;
-		// 		delete pair.first;
-		// 		delete pair.second;
-		// 	}
-		// 	KChar* k3 = new KChar(c);
-		// 	VCount* v3 = new VCount(count);
-		// 	usleep(150000);
-		// 	emit3(k3, v3, context);
-		// }
-	}
+			const char c = static_cast<const KChar*>(pairs->at(0).first)->c;
+			int count = 0;
+			for(const IntermediatePair& pair: *pairs) {
+				count += static_cast<const VCount*>(pair.second)->count;
+				delete pair.first;
+				delete pair.second;
+			}
+			KChar* k3 = new KChar(c);
+			VCount* v3 = new VCount(count);
+			usleep(150000);
+			emit3(k3, v3, context);
+		}
+
 };
 
 

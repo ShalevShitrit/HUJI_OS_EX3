@@ -12,5 +12,6 @@ add_executable(HUJI_OS_EX3
         MapReduceFramework.cpp
         "Barrier/Barrier.cpp"
         "Barrier/Barrier.h"
+        Tests/test1-1_thread_1_process.cpp
 
-        )
+)

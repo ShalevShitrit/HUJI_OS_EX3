@@ -107,6 +107,9 @@
 		<Unit filename="C:/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Sample Client/SampleClient.cpp">
 			<Option target="HUJI_OS_EX3"/>
 		</Unit>
+		<Unit filename="C:/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Tests/test1-1_thread_1_process.cpp">
+			<Option target="HUJI_OS_EX3"/>
+		</Unit>
 		<Unit filename="C:/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

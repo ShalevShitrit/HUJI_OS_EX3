@@ -200,6 +200,30 @@ Sample_Client/SampleClient.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\HUJI_OS_EX3.dir\build.make CMakeFiles/HUJI_OS_EX3.dir/Sample_Client/SampleClient.cpp.s
 .PHONY : Sample_Client/SampleClient.cpp.s
 
+Tests/test1-1_thread_1_process.obj: Tests/test1-1_thread_1_process.cpp.obj
+.PHONY : Tests/test1-1_thread_1_process.obj
+
+# target to build an object file
+Tests/test1-1_thread_1_process.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\HUJI_OS_EX3.dir\build.make CMakeFiles/HUJI_OS_EX3.dir/Tests/test1-1_thread_1_process.cpp.obj
+.PHONY : Tests/test1-1_thread_1_process.cpp.obj
+
+Tests/test1-1_thread_1_process.i: Tests/test1-1_thread_1_process.cpp.i
+.PHONY : Tests/test1-1_thread_1_process.i
+
+# target to preprocess a source file
+Tests/test1-1_thread_1_process.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\HUJI_OS_EX3.dir\build.make CMakeFiles/HUJI_OS_EX3.dir/Tests/test1-1_thread_1_process.cpp.i
+.PHONY : Tests/test1-1_thread_1_process.cpp.i
+
+Tests/test1-1_thread_1_process.s: Tests/test1-1_thread_1_process.cpp.s
+.PHONY : Tests/test1-1_thread_1_process.s
+
+# target to generate assembly for a file
+Tests/test1-1_thread_1_process.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\HUJI_OS_EX3.dir\build.make CMakeFiles/HUJI_OS_EX3.dir/Tests/test1-1_thread_1_process.cpp.s
+.PHONY : Tests/test1-1_thread_1_process.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -218,6 +242,9 @@ help:
 	@echo ... Sample_Client/SampleClient.obj
 	@echo ... Sample_Client/SampleClient.i
 	@echo ... Sample_Client/SampleClient.s
+	@echo ... Tests/test1-1_thread_1_process.obj
+	@echo ... Tests/test1-1_thread_1_process.i
+	@echo ... Tests/test1-1_thread_1_process.s
 .PHONY : help
 
 
