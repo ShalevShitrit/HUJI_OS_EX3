@@ -1,0 +1,198 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16.3"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"build" : "_deps/googletest-build",
+					"childIndexes" : 
+					[
+						2
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "cmake-build-debug/_deps/googletest-src"
+				},
+				{
+					"build" : "_deps/googletest-build/googlemock",
+					"childIndexes" : 
+					[
+						3
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 2,
+					"source" : "cmake-build-debug/_deps/googletest-src/googlemock",
+					"targetIndexes" : 
+					[
+						2,
+						3
+					]
+				},
+				{
+					"build" : "_deps/googletest-build/googletest",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 3,
+					"source" : "cmake-build-debug/_deps/googletest-src/googletest",
+					"targetIndexes" : 
+					[
+						4,
+						5
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "HUJI_OS_EX3",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						2
+					],
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "googletest-distribution",
+					"parentIndex" : 0
+				},
+				{
+					"childIndexes" : 
+					[
+						3
+					],
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "gmock",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						2,
+						3
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "gtest",
+					"parentIndex" : 2,
+					"targetIndexes" : 
+					[
+						4,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "HUJI_OS_EX3::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-HUJI_OS_EX3-Debug-28c0e8e08f35f044f02e.json",
+					"name" : "HUJI_OS_EX3",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "MapReduceFramework::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MapReduceFramework-Debug-e683c4273ffab068ea4b.json",
+					"name" : "MapReduceFramework",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "gmock::@0f7bb11d64f3678238c7",
+					"jsonFile" : "target-gmock-Debug-dab27112478ed93673f4.json",
+					"name" : "gmock",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "gmock_main::@0f7bb11d64f3678238c7",
+					"jsonFile" : "target-gmock_main-Debug-fde517cd2f57979c6cd3.json",
+					"name" : "gmock_main",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "gtest::@1ea2dfc0605fe3ab2a3f",
+					"jsonFile" : "target-gtest-Debug-c22df9b93d654b39fa4d.json",
+					"name" : "gtest",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "gtest_main::@1ea2dfc0605fe3ab2a3f",
+					"jsonFile" : "target-gtest_main-Debug-1f1538518686f4f1c53b.json",
+					"name" : "gtest_main",
+					"projectIndex" : 3
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug",
+		"source" : "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 0
+	}
+}

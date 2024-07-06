@@ -63,6 +63,7 @@ public:
     virtual void map(const K1* key, const V1* val, void* context) const
     {
         int input = (((elements*)key)->num) % unique_keys;
+
         emit2(new elements(input),new elements(1), context);
     }
 
@@ -122,7 +123,9 @@ int main(int argc, char *argv[])
         contexts[l] = {numOfThreads, in_items_vec[l], out_items_vec[l]};
     }
     for (int i = 0; i < numOfProccess; ++i) {
+
         jobs[i] = startMapReduceJob(client,contexts[i].inputVec,contexts[i].outputVec,contexts[i].threadsNumber);
+
     }
     for (int i = 0; i < numOfProccess; ++i) {
 
@@ -144,7 +147,7 @@ int main(int argc, char *argv[])
         for (int j=0; j < (contexts[m].outputVec).size(); j++)
         {
             int value = ((elements *)(contexts[m].outputVec)[j].second)->num;
-            std::cout<<"thread "<<m+1<<" out is:\t"<< value <<std::endl;
+            std::cout<<"thread "<<m+1<<" out is:	"<< value <<std::endl;
         }
 
         for (int k = 0; k < (contexts[m].outputVec).size(); k++)

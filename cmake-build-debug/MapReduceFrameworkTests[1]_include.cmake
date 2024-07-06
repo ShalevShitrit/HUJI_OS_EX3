@@ -1,0 +1,5 @@
+if(EXISTS "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/MapReduceFrameworkTests[1]_tests.cmake")
+  include("/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/MapReduceFrameworkTests[1]_tests.cmake")
+else()
+  add_test(MapReduceFrameworkTests_NOT_BUILT MapReduceFrameworkTests_NOT_BUILT)
+endif()

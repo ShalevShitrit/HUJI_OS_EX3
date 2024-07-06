@@ -1,3 +1,4 @@
+
 #ifndef BARRIER_H
 #define BARRIER_H
 #include <pthread.h>

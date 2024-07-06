@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../MapReduceClient.h
+vector
+-
+utility
+-
+
+../MapReduceFramework.h
+MapReduceClient.h
+../MapReduceClient.h
+
+/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/mattanTests/SampleClient.cpp
+MapReduceFramework.h
+/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/mattanTests/MapReduceFramework.h
+cstdio
+-
+array
+-
+unistd.h
+-
+fstream
+-
+iostream
+-
+random
+-
+C:/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/googletest/googletest/include/gtest/gtest.h
+-
+

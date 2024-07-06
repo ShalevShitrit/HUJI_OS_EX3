@@ -1,0 +1,1 @@
+/usr/bin/c++  -g -fno-omit-frame-pointer -fsanitize=thread   CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.o  -o HUJI_OS_EX3  libMapReduceFramework.a lib/libgtestd.a lib/libgtest_maind.a lib/libgtestd.a -pthread 

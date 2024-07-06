@@ -30,9 +30,9 @@ void set_counter(std::atomic<uint64_t>* atomic_counter, stage_t stage, uint64_t 
                  std::atomic<uint32_t>* started);
 void sorting(ThreadContext* tc);
 bool is_equal_keys(K2* key1, K2* key2);
-void reduce_pahse(void* arg);
+void reduce_phase(void* arg);
 uint64_t count_total_pairs(JobContext* jc);
-IntermediatePair find_max_pair(JobContext* jc, ThreadContext* thread_contexts,bool &found_first);
+IntermediatePair find_max_pair(JobContext* jc, ThreadContext* thread_contexts, bool& found_first);
 typedef std::vector<IntermediateVec> intermidate_q;
 
 struct ThreadContext
@@ -44,17 +44,17 @@ struct ThreadContext
 
 struct JobContext
 {
-    pthread_t* threads;
+    pthread_t* threads{};
     ThreadContext* thread_contexts; // to do change to vector ?
     int num_threads;
-    Barrier* barrier;
-    pthread_mutex_t emit3;
-    pthread_mutex_t reduce;
-    const MapReduceClient* client;
+    Barrier* barrier{};
+    pthread_mutex_t emit3{};
+    pthread_mutex_t reduce{};
+    const MapReduceClient* client{};
     std::atomic<uint64_t> atomic_counter;
     std::atomic<uint32_t> started;
-    OutputVec* output_vec;
-    const InputVec* input_vec;
+    OutputVec* output_vec{};
+    const InputVec* input_vec{};
     bool calledWait;
     intermidate_q shuffle_queue;
 };
@@ -70,15 +70,15 @@ void emit3(K3* key, V3* value, void* context)
     ThreadContext* tc = static_cast<ThreadContext*>(context);
     JobContext* job_context = tc->job_context;
     // lock the emit3 mutex
-    if(pthread_mutex_lock(&job_context->emit3)!=0)
+    if (pthread_mutex_lock(&job_context->emit3) != 0)
     {
         std::cout << SYS_MSG_ERR_PREFIX << LOCK_MUTEX_MSG_ERR << std::endl;
         exit(1);
     }
-    job_context->output_vec->emplace_back(key,value);
+    job_context->output_vec->emplace_back(key, value);
     job_context->atomic_counter++;
     // unlock the emit3 mutex
-    if(pthread_mutex_unlock(&job_context->emit3)!=0)
+    if (pthread_mutex_unlock(&job_context->emit3) != 0)
     {
         std::cout << SYS_MSG_ERR_PREFIX << UNLOCK_MUTEX_MSG_ERR << std::endl;
         exit(1);
@@ -94,7 +94,6 @@ JobHandle startMapReduceJob(const MapReduceClient& client,
 
     for (int i = 0; i < multiThreadLevel; ++i)
     {
-
         jobContext->thread_contexts[i].id = i;
         jobContext->thread_contexts[i].job_context = jobContext;
     }
@@ -103,7 +102,7 @@ JobHandle startMapReduceJob(const MapReduceClient& client,
 
     for (int i = 0; i < multiThreadLevel; ++i)
     {
-        if (pthread_create(&jobContext->threads[i], nullptr, wrappingFunc, &jobContext->thread_contexts[i])
+        if (pthread_create(jobContext->threads + i, nullptr, wrappingFunc, jobContext->thread_contexts + i)
             != 0)
         {
             std::cout << SYS_MSG_ERR_PREFIX << PTHREAD_CREATE_MSG_ERR << std::endl;
@@ -180,6 +179,7 @@ void closeJobHandle(JobHandle job)
 void* wrappingFunc(void* arg)
 {
     ThreadContext* tc = static_cast<ThreadContext*>(arg);
+
     mapping_sorting(arg);
 
     // setting barrier
@@ -188,26 +188,28 @@ void* wrappingFunc(void* arg)
     if (tc->id == 0)
     {
         uint64_t total_work = count_total_pairs(tc->job_context);
-        set_counter(&tc->job_context->atomic_counter,SHUFFLE_STAGE,total_work,&tc->job_context->started);
+        set_counter(&tc->job_context->atomic_counter, SHUFFLE_STAGE, total_work, &tc->job_context->started);
         shuffle_phase(arg);
-        set_counter(&tc->job_context->atomic_counter,REDUCE_STAGE,tc->job_context->shuffle_queue.size()
-            ,&tc->job_context->started);
+        set_counter(&tc->job_context->atomic_counter, REDUCE_STAGE, tc->job_context->shuffle_queue.size()
+                    , &tc->job_context->started);
     }
+
     // barrier for the reduce sage
     tc->job_context->barrier->barrier();
-    reduce_pahse(tc);
+    reduce_phase(tc);
 
     return nullptr;
 }
-void reduce_pahse(void* arg)
+
+void reduce_phase(void* arg)
 {
     ThreadContext* tc = static_cast<ThreadContext*>(arg);
     JobContext* job_context = static_cast<JobContext*>(tc->job_context);
     ThreadContext* all_contexes = job_context->thread_contexts;
 
-    while(!job_context->shuffle_queue.empty())
+    while (!job_context->shuffle_queue.empty())
     {
-        if(pthread_mutex_lock(&job_context->reduce)!=0)
+        if (pthread_mutex_lock(&job_context->reduce) != 0)
         {
             std::cout << SYS_MSG_ERR_PREFIX << LOCK_MUTEX_MSG_ERR << std::endl;
             exit(1);
@@ -215,27 +217,26 @@ void reduce_pahse(void* arg)
 
         tc->intermediate_vec = (job_context->shuffle_queue.back());
         job_context->shuffle_queue.pop_back();
-        if(pthread_mutex_unlock(&job_context->reduce)!=0)
+        if (pthread_mutex_unlock(&job_context->reduce) != 0)
         {
             std::cout << SYS_MSG_ERR_PREFIX << UNLOCK_MUTEX_MSG_ERR << std::endl;
             exit(1);
         }
-        job_context->client->reduce(&tc->intermediate_vec,tc);
-
-
+        job_context->client->reduce(&tc->intermediate_vec, tc);
     }
 }
+
 uint64_t count_total_pairs(JobContext* jc)
 {
     uint64_t count = 0;
-    for(int i = 0;i<jc->num_threads;i++)
+    for (int i = 0; i < jc->num_threads; i++)
     {
         count += jc->thread_contexts[i].intermediate_vec.size();
     }
     return count;
 }
 
-IntermediatePair find_max_pair(JobContext* jc, ThreadContext* thread_contexts,bool &found_first)
+IntermediatePair find_max_pair(JobContext* jc, ThreadContext* thread_contexts, bool& found_first)
 {
     // first loop to find the max K2
     IntermediatePair max_pair;
@@ -268,7 +269,7 @@ void shuffle_phase(void* arg)
     ThreadContext* thread_contexts = (jc->thread_contexts);
 
     bool found_first = false;
-    IntermediatePair max_pair= find_max_pair(jc, thread_contexts,found_first);
+    IntermediatePair max_pair = find_max_pair(jc, thread_contexts, found_first);
 
 
     while (found_first)
@@ -278,20 +279,16 @@ void shuffle_phase(void* arg)
         // second loop to extract the corralate keys
         for (int i = 0; i < jc->num_threads; i++)
         {
-            if (!thread_contexts[i].intermediate_vec.empty())
+            while (!thread_contexts[i].intermediate_vec.empty() &&
+                is_equal_keys(max_pair.first, thread_contexts[i].intermediate_vec.back().first))
             {
-                if(is_equal_keys(max_pair.first,thread_contexts[i].intermediate_vec.back().first))
-                {
-                    key_vec.push_back(thread_contexts[i].intermediate_vec.back());
-                    thread_contexts[i].intermediate_vec.pop_back();
-                    jc->atomic_counter.fetch_add(1);
-                }
-
+                key_vec.push_back(thread_contexts[i].intermediate_vec.back());
+                thread_contexts[i].intermediate_vec.pop_back();
+                jc->atomic_counter.fetch_add(1);
             }
         } // end second loop
         jc->shuffle_queue.push_back(key_vec);
-        max_pair = find_max_pair(jc, thread_contexts,found_first);
-
+        max_pair = find_max_pair(jc, thread_contexts, found_first);
     } // end while
 }
 
@@ -315,8 +312,8 @@ void mapping_sorting(void* arg)
         }
         tc->job_context->client->map(inputVec[old_val].first, inputVec[old_val].second, tc);
         tc->job_context->atomic_counter.fetch_add(1);
-        sorting(tc);
     }
+    sorting(tc);
 }
 
 void init_job_context(const MapReduceClient& client, const InputVec
@@ -341,14 +338,14 @@ void init_job_context(const MapReduceClient& client, const InputVec
 
     jobContext->barrier = new Barrier(multiThreadLevel);
     // todo: update mutex
-    if(pthread_mutex_init(&jobContext->emit3, nullptr)!=0)
+    if (pthread_mutex_init(&jobContext->emit3, nullptr) != 0)
     {
-        std::cout << SYS_MSG_ERR_PREFIX << INIT_MUTEX_MSG_ERR <<std::endl;
+        std::cout << SYS_MSG_ERR_PREFIX << INIT_MUTEX_MSG_ERR << std::endl;
         exit(1);
     }
-    if( pthread_mutex_init(&jobContext->reduce, nullptr)!=0)
+    if (pthread_mutex_init(&jobContext->reduce, nullptr) != 0)
     {
-        std::cout << SYS_MSG_ERR_PREFIX << INIT_MUTEX_MSG_ERR <<std::endl;
+        std::cout << SYS_MSG_ERR_PREFIX << INIT_MUTEX_MSG_ERR << std::endl;
         exit(1);
     }
 
@@ -379,8 +376,8 @@ void set_counter(std::atomic<uint64_t>* atomic_counter, stage_t stage,
 
 void sorting(ThreadContext* tc)
 {
-    IntermediateVec intermediate_vec = tc->intermediate_vec;
-    std::sort(intermediate_vec.begin(),
-              intermediate_vec.end(),
+    IntermediateVec* intermediate_vec = &tc->intermediate_vec;
+    std::sort(intermediate_vec->begin(),
+              intermediate_vec->end(),
               [](const IntermediatePair& a, const IntermediatePair& b) { return *a.first < *b.first; });
 }
