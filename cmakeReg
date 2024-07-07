@@ -1,0 +1,21 @@
+#cmake_minimum_required(VERSION 3.16.3)
+#project(HUJI_OS_EX3)
+#
+#set(CMAKE_CXX_STANDARD 11)
+#
+#include_directories(.)
+#SET(GCC_COVERAGE_COMPILE_FLAGS)
+#add_executable(HUJI_OS_EX3
+#        MapReduceClient.h
+#        MapReduceFramework.cpp
+#        MapReduceFramework.h
+#        "Barrier/Barrier.cpp"
+#        "Barrier/Barrier.h"
+##        "Test/test1-1_thread_1_process.cpp"
+#        Test/test4-1_thread_4_process.cpp
+##        "ref.cpp"
+#
+#)
+## Find and link the pthread library
+#find_package(Threads REQUIRED)
+#target_link_libraries(HUJI_OS_EX3 ${CMAKE_THREAD_LIBS_INIT})

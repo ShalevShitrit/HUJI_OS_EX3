@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.o"
+  "CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.o"
   "CMakeFiles/MapReduceFramework.dir/MapReduceFramework.cpp.o"
   "libMapReduceFramework.a"
   "libMapReduceFramework.pdb"

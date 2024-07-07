@@ -11,69 +11,53 @@
 #        MapReduceFramework.h
 #        "Barrier/Barrier.cpp"
 #        "Barrier/Barrier.h"
-##        "Test/test1-1_thread_1_process.cpp"
-#        Test/test4-1_thread_4_process.cpp
+#        "Test/test1-1_thread_1_process.cpp"
+##        Test/test4-1_thread_4_process.cpp
 ##        "ref.cpp"
 #
 #)
 ## Find and link the pthread library
 #find_package(Threads REQUIRED)
 #target_link_libraries(HUJI_OS_EX3 ${CMAKE_THREAD_LIBS_INIT})
+#
+cmake_minimum_required(VERSION 3.1)
 
-cmake_minimum_required(VERSION 3.16.3)
 
-project(HUJI_OS_EX3 VERSION 1.0 LANGUAGES C CXX)
+# NOTE: You can't have both ThreadSanitizer and AddressSanitizer enabled at the same time.
 
-# Set C++ standard to 11
-set(CMAKE_CXX_STANDARD 11)
+## Uncomment the following to enable ThreadSanitizer.
+#set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=thread")
+#set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=thread")
 
-# Enable ThreadSanitizer for debug builds
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=thread")
-set(CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=thread")
+# Uncomment the following to enable AddressSanitizer.
+set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
+set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
+
+
+# Project configuration
+project(ex3 VERSION 1.0 LANGUAGES C CXX)
+
 
 # Ensure system has pthreads
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-# FetchContent added in CMake 3.11
-include(FetchContent)
-
-# Download GoogleTest
-FetchContent_Declare(
-        googletest
-        URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
-)
-
-# Make GoogleTest available
-FetchContent_MakeAvailable(googletest)
-
-# Add your library
 add_library(MapReduceFramework
         MapReduceClient.h
-        MapReduceFramework.cpp
-        MapReduceFramework.h
-        Barrier/Barrier.cpp
-        Barrier/Barrier.h
+        "Barrier/barrier.cpp"
+        "Barrier/barrier.h"
+        MapReduceFramework.cpp MapReduceFramework.h
 
+        # ------------- Add your own .h/.cpp files here -------------------
 )
-include_directories(googletest)
-# Set properties for the library
+
+
 set_property(TARGET MapReduceFramework PROPERTY CXX_STANDARD 11)
+# to include debugging information, add the flags `-ggdb -g3`, to compile an optimized build add `-O3`
 target_compile_options(MapReduceFramework PUBLIC -Wall -Wextra)
 target_include_directories(MapReduceFramework PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-
-# Link pthreads to your framework
+# link pthreads to your framework
 target_link_libraries(MapReduceFramework PUBLIC Threads::Threads)
 
-# Add your executable
-add_executable(HUJI_OS_EX3
-        mattanTests/SampleClient.cpp
-)
-
-# Link the framework and pthreads to your executable
-target_link_libraries(HUJI_OS_EX3 PRIVATE MapReduceFramework Threads::Threads)
-
-# Link GoogleTest to your executable (if needed for tests)
-target_link_libraries(HUJI_OS_EX3 PRIVATE gtest gtest_main)
-
-# Add subdirectory for additional tests (if any)
+# Add tests
+add_subdirectory(mattanTests)

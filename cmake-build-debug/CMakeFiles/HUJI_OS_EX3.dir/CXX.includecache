@@ -6,31 +6,37 @@
 
 #IncludeRegexTransform: 
 
-../MapReduceClient.h
+/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Test/MapReduceClient.h
 vector
 -
 utility
 -
 
-../MapReduceFramework.h
+/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Test/MapReduceFramework.h
 MapReduceClient.h
-../MapReduceClient.h
+/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Test/MapReduceClient.h
 
-/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/mattanTests/SampleClient.cpp
-MapReduceFramework.h
-/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/mattanTests/MapReduceFramework.h
-cstdio
--
-array
+/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Test/test1-1_thread_1_process.cpp
+iostream
 -
 unistd.h
 -
-fstream
+MapReduceClient.h
+/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Test/MapReduceClient.h
+MapReduceFramework.h
+/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Test/MapReduceFramework.h
+chrono
 -
-iostream
+thread
 -
-random
+algorithm
 -
-C:/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/googletest/googletest/include/gtest/gtest.h
+sys/types.h
+-
+stdio.h
+-
+sys/wait.h
+-
+set
 -
 

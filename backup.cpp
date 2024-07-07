@@ -5,8 +5,6 @@
 #include <pthread.h>
 #include <atomic>
 #include <iostream>
-#include <bitset> // todo remove
-#include <cstdint> // todo remove
 #include<algorithm>
 #include "Barrier/Barrier.h"
 #define SYS_MSG_ERR_PREFIX "system error: "

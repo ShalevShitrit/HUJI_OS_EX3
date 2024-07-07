@@ -5,10 +5,8 @@
 #include <pthread.h>
 #include <atomic>
 #include <iostream>
-#include <bitset> // todo remove
-#include <cstdint> // todo remove
 #include<algorithm>
-#include "Barrier/Barrier.h"
+#include "Barrier.h"
 #define SYS_MSG_ERR_PREFIX "system error: "
 #define PTHREAD_CREATE_MSG_ERR "creating thread failed."
 #define ALLOC_MSG_ERR "memory allocation failed."
@@ -16,8 +14,12 @@
 #define INIT_MUTEX_MSG_ERR "init mutex failed."
 #define LOCK_MUTEX_MSG_ERR "lock mutex failed."
 #define UNLOCK_MUTEX_MSG_ERR "unlock mutex failed."
+#define DESTROY_MUTEX_MSG_ERR "failed to destroy mutex."
+#define PTHREAD_CANCEL_MSG_ERR "pthread cancel failed."
+#define PTHREAD_SET_CANCEL_MSG_ERR "failed to set state for thread."
 #define GET_COUNT &( static_cast<uint64_t>(0x7fffffff))
-// todo: free all allocations before exit(1)
+#define GET_STAGE >> 62
+#define GET_TOTAL_WORK >> 31
 struct JobContext;
 struct ThreadContext;
 void shuffle_phase(void* arg);
@@ -34,10 +36,11 @@ void reduce_phase(void* arg);
 uint64_t count_total_pairs(JobContext* jc);
 IntermediatePair find_max_pair(JobContext* jc, ThreadContext* thread_contexts, bool& found_first);
 typedef std::vector<IntermediateVec> intermidate_q;
+void freeJob(JobContext* jobContext);
 
 struct ThreadContext
 {
-    IntermediateVec intermediate_vec;
+    IntermediateVec intermediate_vec{};
     int id;
     JobContext* job_context;
 };
@@ -57,6 +60,7 @@ struct JobContext
     const InputVec* input_vec{};
     bool calledWait;
     intermidate_q shuffle_queue;
+    std::atomic<bool> cancaled;
 };
 
 void emit2(K2* key, V2* value, void* context)
@@ -73,14 +77,16 @@ void emit3(K3* key, V3* value, void* context)
     if (pthread_mutex_lock(&job_context->emit3) != 0)
     {
         std::cout << SYS_MSG_ERR_PREFIX << LOCK_MUTEX_MSG_ERR << std::endl;
+        freeJob(job_context);
         exit(1);
     }
     job_context->output_vec->emplace_back(key, value);
-    job_context->atomic_counter++;
+
     // unlock the emit3 mutex
     if (pthread_mutex_unlock(&job_context->emit3) != 0)
     {
         std::cout << SYS_MSG_ERR_PREFIX << UNLOCK_MUTEX_MSG_ERR << std::endl;
+        freeJob(job_context);
         exit(1);
     }
 }
@@ -89,6 +95,7 @@ JobHandle startMapReduceJob(const MapReduceClient& client,
                             const InputVec& inputVec, OutputVec& outputVec,
                             int multiThreadLevel)
 {
+
     JobContext* jobContext;
     init_job_context(client, inputVec, outputVec, multiThreadLevel, jobContext);
 
@@ -96,16 +103,19 @@ JobHandle startMapReduceJob(const MapReduceClient& client,
     {
         jobContext->thread_contexts[i].id = i;
         jobContext->thread_contexts[i].job_context = jobContext;
+
     }
     // starts the map stage
     set_counter(&jobContext->atomic_counter, MAP_STAGE, inputVec.size(), &jobContext->started);
-
     for (int i = 0; i < multiThreadLevel; ++i)
     {
+        // Set cancel state and type before creating the thread
         if (pthread_create(jobContext->threads + i, nullptr, wrappingFunc, jobContext->thread_contexts + i)
             != 0)
         {
+
             std::cout << SYS_MSG_ERR_PREFIX << PTHREAD_CREATE_MSG_ERR << std::endl;
+            freeJob(jobContext);
             exit(1);
         }
     }
@@ -126,6 +136,7 @@ void waitForJob(JobHandle job)
         if (pthread_join(jobContext->threads[i], nullptr) != 0)
         {
             std::cout << SYS_MSG_ERR_PREFIX << PTHREAD_JOIN_MSG_ERR << std::endl;
+            freeJob(jobContext);
             exit(1);
         }
     }
@@ -135,11 +146,11 @@ void waitForJob(JobHandle job)
 void getJobState(JobHandle job, JobState* state)
 {
     JobContext* job_context = static_cast<JobContext*>(job);
-
+    // according to documenta this function does not throw exception
     uint64_t cur_atomic = (job_context->atomic_counter.load());
     uint64_t cur_count = (cur_atomic GET_COUNT);
-    uint64_t cur_stage = (cur_atomic >> 62);
-    uint64_t total_work = (cur_atomic >> 31) GET_COUNT;
+    uint64_t cur_stage = (cur_atomic GET_STAGE);
+    uint64_t total_work = (cur_atomic GET_TOTAL_WORK) GET_COUNT;
 
     if (cur_stage == UNDEFINED_STAGE)
     {
@@ -153,33 +164,45 @@ void getJobState(JobHandle job, JobState* state)
 }
 
 
+void freeJob(JobContext* jobContext)
+{
+
+    delete[] jobContext->thread_contexts;
+    delete[] jobContext->threads;
+    delete jobContext->barrier;
+    if(pthread_mutex_destroy(&jobContext->emit3) != 0)
+    {
+        std::cout << SYS_MSG_ERR_PREFIX << DESTROY_MUTEX_MSG_ERR << std::endl;
+        freeJob(jobContext);
+        exit(1);
+    }
+    if(pthread_mutex_destroy(&jobContext->reduce) != 0)
+    {
+        std::cout << SYS_MSG_ERR_PREFIX << DESTROY_MUTEX_MSG_ERR << std::endl;
+        freeJob(jobContext);
+        exit(1);
+    }
+    delete jobContext;
+}
+
 void closeJobHandle(JobHandle job)
 {
+
     JobContext* jobContext = static_cast<JobContext*>(job);
     if (jobContext == nullptr)
     {
         return;
     }
     waitForJob(job);
-
-    // for (int i = 0; i < jobContext->num_threads; ++i)
-    // {
-    //     delete jobContext->thread_contexts[i].intermediate_vec;
-    // }
-
-    delete[] jobContext->thread_contexts;
-    delete[] jobContext->threads;
-    delete jobContext->barrier;
-    pthread_mutex_destroy(&jobContext->emit3);
-    pthread_mutex_destroy(&jobContext->reduce);
-    delete jobContext;
+    freeJob(jobContext);
 }
+
 
 // HELPER functions
 void* wrappingFunc(void* arg)
 {
-    ThreadContext* tc = static_cast<ThreadContext*>(arg);
 
+    ThreadContext* tc = static_cast<ThreadContext*>(arg);
     mapping_sorting(arg);
 
     // setting barrier
@@ -203,26 +226,29 @@ void* wrappingFunc(void* arg)
 
 void reduce_phase(void* arg)
 {
+
     ThreadContext* tc = static_cast<ThreadContext*>(arg);
     JobContext* job_context = static_cast<JobContext*>(tc->job_context);
-    ThreadContext* all_contexes = job_context->thread_contexts;
-
+    if (pthread_mutex_lock(&job_context->reduce) != 0)
+    {
+        std::cout << SYS_MSG_ERR_PREFIX << LOCK_MUTEX_MSG_ERR << std::endl;
+        freeJob(job_context);
+        exit(1);
+    }
     while (!job_context->shuffle_queue.empty())
     {
-        if (pthread_mutex_lock(&job_context->reduce) != 0)
-        {
-            std::cout << SYS_MSG_ERR_PREFIX << LOCK_MUTEX_MSG_ERR << std::endl;
-            exit(1);
-        }
-
         tc->intermediate_vec = (job_context->shuffle_queue.back());
         job_context->shuffle_queue.pop_back();
-        if (pthread_mutex_unlock(&job_context->reduce) != 0)
-        {
-            std::cout << SYS_MSG_ERR_PREFIX << UNLOCK_MUTEX_MSG_ERR << std::endl;
-            exit(1);
-        }
         job_context->client->reduce(&tc->intermediate_vec, tc);
+        job_context->atomic_counter++;
+
+
+    }
+    if (pthread_mutex_unlock(&job_context->reduce) != 0)
+    {
+        std::cout << SYS_MSG_ERR_PREFIX << UNLOCK_MUTEX_MSG_ERR << std::endl;
+        freeJob(job_context);
+        exit(1);
     }
 }
 
@@ -274,6 +300,7 @@ void shuffle_phase(void* arg)
 
     while (found_first)
     {
+
         // std::cout<<max_pair.first << std::endl;
         IntermediateVec key_vec;
         // second loop to extract the corralate keys
@@ -331,13 +358,14 @@ void init_job_context(const MapReduceClient& client, const InputVec
     jobContext->input_vec = &inputVec;
     jobContext->output_vec = &outputVec;
     jobContext->calledWait = false;
+    jobContext->cancaled = false;
 
     jobContext->atomic_counter = {0};
     jobContext->started = {0};
 
 
     jobContext->barrier = new Barrier(multiThreadLevel);
-    // todo: update mutex
+    check_allocation_pointer(jobContext->barrier);
     if (pthread_mutex_init(&jobContext->emit3, nullptr) != 0)
     {
         std::cout << SYS_MSG_ERR_PREFIX << INIT_MUTEX_MSG_ERR << std::endl;

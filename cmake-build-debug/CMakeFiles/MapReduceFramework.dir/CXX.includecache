@@ -6,3 +6,31 @@
 
 #IncludeRegexTransform: 
 
+/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Barrier/Barrier.h
+pthread.h
+-
+
+/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/MapReduceClient.h
+vector
+-
+utility
+-
+
+/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/MapReduceFramework.cpp
+MapReduceFramework.h
+/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/MapReduceFramework.h
+pthread.h
+-
+atomic
+-
+iostream
+-
+algorithm
+-
+Barrier/Barrier.h
+/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Barrier/Barrier.h
+
+/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/MapReduceFramework.h
+MapReduceClient.h
+/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/MapReduceClient.h
+

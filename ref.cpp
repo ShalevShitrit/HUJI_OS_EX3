@@ -341,7 +341,7 @@ JobContext *job_init (const MapReduceClient *client,
 
   /* set threads data */
   job_context->contexts = new (std::nothrow) ThreadContext[multiThreadLevel];
-  if (job_context->contexts == nullptr)
+  if (job_context->contexts != nullptr)
     {
       std::cout << MSG_ERROR << MSG_ALLOC_FAIL << std::endl;
       exit (FAIL);

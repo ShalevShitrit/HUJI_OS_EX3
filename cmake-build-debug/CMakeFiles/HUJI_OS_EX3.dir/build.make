@@ -57,34 +57,60 @@ include CMakeFiles/HUJI_OS_EX3.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/HUJI_OS_EX3.dir/flags.make
 
-CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.o: CMakeFiles/HUJI_OS_EX3.dir/flags.make
-CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.o: ../mattanTests/SampleClient.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.o -c "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/mattanTests/SampleClient.cpp"
+CMakeFiles/HUJI_OS_EX3.dir/MapReduceFramework.cpp.o: CMakeFiles/HUJI_OS_EX3.dir/flags.make
+CMakeFiles/HUJI_OS_EX3.dir/MapReduceFramework.cpp.o: ../MapReduceFramework.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/HUJI_OS_EX3.dir/MapReduceFramework.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HUJI_OS_EX3.dir/MapReduceFramework.cpp.o -c "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/MapReduceFramework.cpp"
 
-CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/mattanTests/SampleClient.cpp" > CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.i
+CMakeFiles/HUJI_OS_EX3.dir/MapReduceFramework.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HUJI_OS_EX3.dir/MapReduceFramework.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/MapReduceFramework.cpp" > CMakeFiles/HUJI_OS_EX3.dir/MapReduceFramework.cpp.i
 
-CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/mattanTests/SampleClient.cpp" -o CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.s
+CMakeFiles/HUJI_OS_EX3.dir/MapReduceFramework.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HUJI_OS_EX3.dir/MapReduceFramework.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/MapReduceFramework.cpp" -o CMakeFiles/HUJI_OS_EX3.dir/MapReduceFramework.cpp.s
+
+CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.o: CMakeFiles/HUJI_OS_EX3.dir/flags.make
+CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.o: ../Barrier/Barrier.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.o -c "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Barrier/Barrier.cpp"
+
+CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Barrier/Barrier.cpp" > CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.i
+
+CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Barrier/Barrier.cpp" -o CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.s
+
+CMakeFiles/HUJI_OS_EX3.dir/Test/test1-1_thread_1_process.cpp.o: CMakeFiles/HUJI_OS_EX3.dir/flags.make
+CMakeFiles/HUJI_OS_EX3.dir/Test/test1-1_thread_1_process.cpp.o: ../Test/test1-1_thread_1_process.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/HUJI_OS_EX3.dir/Test/test1-1_thread_1_process.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HUJI_OS_EX3.dir/Test/test1-1_thread_1_process.cpp.o -c "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Test/test1-1_thread_1_process.cpp"
+
+CMakeFiles/HUJI_OS_EX3.dir/Test/test1-1_thread_1_process.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HUJI_OS_EX3.dir/Test/test1-1_thread_1_process.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Test/test1-1_thread_1_process.cpp" > CMakeFiles/HUJI_OS_EX3.dir/Test/test1-1_thread_1_process.cpp.i
+
+CMakeFiles/HUJI_OS_EX3.dir/Test/test1-1_thread_1_process.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HUJI_OS_EX3.dir/Test/test1-1_thread_1_process.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Test/test1-1_thread_1_process.cpp" -o CMakeFiles/HUJI_OS_EX3.dir/Test/test1-1_thread_1_process.cpp.s
 
 # Object files for target HUJI_OS_EX3
 HUJI_OS_EX3_OBJECTS = \
-"CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.o"
+"CMakeFiles/HUJI_OS_EX3.dir/MapReduceFramework.cpp.o" \
+"CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.o" \
+"CMakeFiles/HUJI_OS_EX3.dir/Test/test1-1_thread_1_process.cpp.o"
 
 # External object files for target HUJI_OS_EX3
 HUJI_OS_EX3_EXTERNAL_OBJECTS =
 
-HUJI_OS_EX3: CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.o
+HUJI_OS_EX3: CMakeFiles/HUJI_OS_EX3.dir/MapReduceFramework.cpp.o
+HUJI_OS_EX3: CMakeFiles/HUJI_OS_EX3.dir/Barrier/Barrier.cpp.o
+HUJI_OS_EX3: CMakeFiles/HUJI_OS_EX3.dir/Test/test1-1_thread_1_process.cpp.o
 HUJI_OS_EX3: CMakeFiles/HUJI_OS_EX3.dir/build.make
-HUJI_OS_EX3: libMapReduceFramework.a
-HUJI_OS_EX3: lib/libgtestd.a
-HUJI_OS_EX3: lib/libgtest_maind.a
-HUJI_OS_EX3: lib/libgtestd.a
 HUJI_OS_EX3: CMakeFiles/HUJI_OS_EX3.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable HUJI_OS_EX3"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable HUJI_OS_EX3"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/HUJI_OS_EX3.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

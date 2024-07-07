@@ -38,8 +38,9 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/_deps/googletest-build/cmake_install.cmake")
+  # Include the install script for each subdirectory.
+  include("/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/mattanTests/cmake_install.cmake")
+
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)

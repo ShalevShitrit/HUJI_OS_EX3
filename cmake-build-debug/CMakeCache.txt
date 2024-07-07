@@ -207,7 +207,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=HUJI_OS_EX3
+CMAKE_PROJECT_NAME:STATIC=ex3
 
 //Value Computed by CMake
 CMAKE_PROJECT_VERSION:STATIC=1.0
@@ -339,25 +339,19 @@ ex3_BINARY_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_
 ex3_SOURCE_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3
 
 //Value Computed by CMake
-gmock_BINARY_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/_deps/googletest-build/googlemock
-
-//Dependencies for the target
-gmock_LIB_DEPENDS:STATIC=general;gtest;
+gmock_BINARY_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/mattanTests/googletest-build/googlemock
 
 //Value Computed by CMake
-gmock_SOURCE_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/_deps/googletest-src/googlemock
+gmock_SOURCE_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/mattanTests/googletest-src/googlemock
 
 //Build all of Google Mock's own tests.
 gmock_build_tests:BOOL=OFF
 
-//Dependencies for the target
-gmock_main_LIB_DEPENDS:STATIC=general;gmock;
+//Value Computed by CMake
+googletest-distribution_BINARY_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/mattanTests/googletest-build
 
 //Value Computed by CMake
-googletest-distribution_BINARY_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/_deps/googletest-build
-
-//Value Computed by CMake
-googletest-distribution_SOURCE_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/_deps/googletest-src
+googletest-distribution_SOURCE_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/mattanTests/googletest-src
 
 //Value Computed by CMake
 googletest-download_BINARY_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/mattanTests
@@ -366,10 +360,10 @@ googletest-download_BINARY_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/s
 googletest-download_SOURCE_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/mattanTests
 
 //Value Computed by CMake
-gtest_BINARY_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/_deps/googletest-build/googletest
+gtest_BINARY_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/mattanTests/googletest-build/googletest
 
 //Value Computed by CMake
-gtest_SOURCE_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/_deps/googletest-src/googletest
+gtest_SOURCE_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/mattanTests/googletest-src/googletest
 
 //Build gtest's sample programs.
 gtest_build_samples:BOOL=OFF
@@ -386,9 +380,6 @@ gtest_force_shared_crt:BOOL=ON
 
 //Build gtest with internal symbols hidden in shared libraries.
 gtest_hide_internal_symbols:BOOL=OFF
-
-//Dependencies for the target
-gtest_main_LIB_DEPENDS:STATIC=general;gtest;
 
 //Value Computed by CMake
 mattanTester_BINARY_DIR:STATIC=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/mattanTests
@@ -549,7 +540,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=4
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -608,11 +599,9 @@ THREADS_HAVE_PTHREAD_ARG:INTERNAL=TRUE
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=/usr/local
 //ADVANCED property for variable: _Python_EXECUTABLE
 _Python_EXECUTABLE-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: _Python_INTERPRETER_SIGNATURE
-_Python_INTERPRETER_SIGNATURE-ADVANCED:INTERNAL=1
 _Python_INTERPRETER_SIGNATURE:INTERNAL=5b249f534fb5da59127a04216834c6ce
 cmake_package_name:INTERNAL=GTest
-generated_dir:INTERNAL=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/_deps/googletest-build/googletest/generated
+generated_dir:INTERNAL=/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/mattanTests/googletest-build/googletest/generated
 //ADVANCED property for variable: gmock_build_tests
 gmock_build_tests-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: gtest_build_samples

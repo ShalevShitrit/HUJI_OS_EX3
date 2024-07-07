@@ -1,0 +1,10 @@
+omerdahan, shalevshitrit
+Omer Dahan (315466664), Shalev Shitrit (314825597)
+EX: 3
+
+FILES:
+README -- overview of the project and file descriptions.
+Makefile -- a make file for crating the static library.
+MapReduceFramework.cpp -- the implementation file for the MapReduce framework.
+Barrier.cpp -- implementation of a thread synchronization barrier using pthreads.
+Barrier.h -- header file declaring the Barrier class for thread synchronization using pthreads.

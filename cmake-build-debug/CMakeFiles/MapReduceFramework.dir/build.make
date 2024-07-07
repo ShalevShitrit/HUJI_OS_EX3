@@ -57,9 +57,22 @@ include CMakeFiles/MapReduceFramework.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/MapReduceFramework.dir/flags.make
 
+CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.o: CMakeFiles/MapReduceFramework.dir/flags.make
+CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.o: ../Barrier/barrier.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.o -c "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Barrier/barrier.cpp"
+
+CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Barrier/barrier.cpp" > CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.i
+
+CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Barrier/barrier.cpp" -o CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.s
+
 CMakeFiles/MapReduceFramework.dir/MapReduceFramework.cpp.o: CMakeFiles/MapReduceFramework.dir/flags.make
 CMakeFiles/MapReduceFramework.dir/MapReduceFramework.cpp.o: ../MapReduceFramework.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MapReduceFramework.dir/MapReduceFramework.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MapReduceFramework.dir/MapReduceFramework.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MapReduceFramework.dir/MapReduceFramework.cpp.o -c "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/MapReduceFramework.cpp"
 
 CMakeFiles/MapReduceFramework.dir/MapReduceFramework.cpp.i: cmake_force
@@ -70,29 +83,16 @@ CMakeFiles/MapReduceFramework.dir/MapReduceFramework.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MapReduceFramework.dir/MapReduceFramework.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/MapReduceFramework.cpp" -o CMakeFiles/MapReduceFramework.dir/MapReduceFramework.cpp.s
 
-CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.o: CMakeFiles/MapReduceFramework.dir/flags.make
-CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.o: ../Barrier/Barrier.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.o -c "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Barrier/Barrier.cpp"
-
-CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Barrier/Barrier.cpp" > CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.i
-
-CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/Barrier/Barrier.cpp" -o CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.s
-
 # Object files for target MapReduceFramework
 MapReduceFramework_OBJECTS = \
-"CMakeFiles/MapReduceFramework.dir/MapReduceFramework.cpp.o" \
-"CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.o"
+"CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.o" \
+"CMakeFiles/MapReduceFramework.dir/MapReduceFramework.cpp.o"
 
 # External object files for target MapReduceFramework
 MapReduceFramework_EXTERNAL_OBJECTS =
 
+libMapReduceFramework.a: CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.o
 libMapReduceFramework.a: CMakeFiles/MapReduceFramework.dir/MapReduceFramework.cpp.o
-libMapReduceFramework.a: CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.o
 libMapReduceFramework.a: CMakeFiles/MapReduceFramework.dir/build.make
 libMapReduceFramework.a: CMakeFiles/MapReduceFramework.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/mnt/c/Users/omer1/Desktop/degree/year 2/sem 2/OS/HUJI_OS_EX3/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libMapReduceFramework.a"

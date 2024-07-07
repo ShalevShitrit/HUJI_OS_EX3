@@ -80,17 +80,6 @@ install/local/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -105,7 +94,7 @@ install/fast: preinstall/fast
 
 # Special rule for the target list_install_components
 list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"gmock\" \"gtest\""
 .PHONY : list_install_components
 
 # Special rule for the target list_install_components
@@ -123,6 +112,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -157,19 +157,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named HUJI_OS_EX3
-
-# Build rule for target.
-HUJI_OS_EX3: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 HUJI_OS_EX3
-.PHONY : HUJI_OS_EX3
-
-# fast build rule for target.
-HUJI_OS_EX3/fast:
-	$(MAKE) -f CMakeFiles/HUJI_OS_EX3.dir/build.make CMakeFiles/HUJI_OS_EX3.dir/build
-.PHONY : HUJI_OS_EX3/fast
-
-#=============================================================================
 # Target rules for targets named MapReduceFramework
 
 # Build rule for target.
@@ -183,6 +170,19 @@ MapReduceFramework/fast:
 .PHONY : MapReduceFramework/fast
 
 #=============================================================================
+# Target rules for targets named mattanTester
+
+# Build rule for target.
+mattanTester: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 mattanTester
+.PHONY : mattanTester
+
+# fast build rule for target.
+mattanTester/fast:
+	$(MAKE) -f mattanTests/CMakeFiles/mattanTester.dir/build.make mattanTests/CMakeFiles/mattanTester.dir/build
+.PHONY : mattanTester/fast
+
+#=============================================================================
 # Target rules for targets named gmock_main
 
 # Build rule for target.
@@ -192,7 +192,7 @@ gmock_main: cmake_check_build_system
 
 # fast build rule for target.
 gmock_main/fast:
-	$(MAKE) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build
+	$(MAKE) -f mattanTests/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make mattanTests/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build
 .PHONY : gmock_main/fast
 
 #=============================================================================
@@ -205,7 +205,7 @@ gmock: cmake_check_build_system
 
 # fast build rule for target.
 gmock/fast:
-	$(MAKE) -f _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build
+	$(MAKE) -f mattanTests/googletest-build/googlemock/CMakeFiles/gmock.dir/build.make mattanTests/googletest-build/googlemock/CMakeFiles/gmock.dir/build
 .PHONY : gmock/fast
 
 #=============================================================================
@@ -218,7 +218,7 @@ gtest_main: cmake_check_build_system
 
 # fast build rule for target.
 gtest_main/fast:
-	$(MAKE) -f _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build
+	$(MAKE) -f mattanTests/googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make mattanTests/googletest-build/googletest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
 #=============================================================================
@@ -231,35 +231,35 @@ gtest: cmake_check_build_system
 
 # fast build rule for target.
 gtest/fast:
-	$(MAKE) -f _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build
+	$(MAKE) -f mattanTests/googletest-build/googletest/CMakeFiles/gtest.dir/build.make mattanTests/googletest-build/googletest/CMakeFiles/gtest.dir/build
 .PHONY : gtest/fast
 
-Barrier/Barrier.o: Barrier/Barrier.cpp.o
+Barrier/barrier.o: Barrier/barrier.cpp.o
 
-.PHONY : Barrier/Barrier.o
+.PHONY : Barrier/barrier.o
 
 # target to build an object file
-Barrier/Barrier.cpp.o:
-	$(MAKE) -f CMakeFiles/MapReduceFramework.dir/build.make CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.o
-.PHONY : Barrier/Barrier.cpp.o
+Barrier/barrier.cpp.o:
+	$(MAKE) -f CMakeFiles/MapReduceFramework.dir/build.make CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.o
+.PHONY : Barrier/barrier.cpp.o
 
-Barrier/Barrier.i: Barrier/Barrier.cpp.i
+Barrier/barrier.i: Barrier/barrier.cpp.i
 
-.PHONY : Barrier/Barrier.i
+.PHONY : Barrier/barrier.i
 
 # target to preprocess a source file
-Barrier/Barrier.cpp.i:
-	$(MAKE) -f CMakeFiles/MapReduceFramework.dir/build.make CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.i
-.PHONY : Barrier/Barrier.cpp.i
+Barrier/barrier.cpp.i:
+	$(MAKE) -f CMakeFiles/MapReduceFramework.dir/build.make CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.i
+.PHONY : Barrier/barrier.cpp.i
 
-Barrier/Barrier.s: Barrier/Barrier.cpp.s
+Barrier/barrier.s: Barrier/barrier.cpp.s
 
-.PHONY : Barrier/Barrier.s
+.PHONY : Barrier/barrier.s
 
 # target to generate assembly for a file
-Barrier/Barrier.cpp.s:
-	$(MAKE) -f CMakeFiles/MapReduceFramework.dir/build.make CMakeFiles/MapReduceFramework.dir/Barrier/Barrier.cpp.s
-.PHONY : Barrier/Barrier.cpp.s
+Barrier/barrier.cpp.s:
+	$(MAKE) -f CMakeFiles/MapReduceFramework.dir/build.make CMakeFiles/MapReduceFramework.dir/Barrier/barrier.cpp.s
+.PHONY : Barrier/barrier.cpp.s
 
 MapReduceFramework.o: MapReduceFramework.cpp.o
 
@@ -288,33 +288,6 @@ MapReduceFramework.cpp.s:
 	$(MAKE) -f CMakeFiles/MapReduceFramework.dir/build.make CMakeFiles/MapReduceFramework.dir/MapReduceFramework.cpp.s
 .PHONY : MapReduceFramework.cpp.s
 
-mattanTests/SampleClient.o: mattanTests/SampleClient.cpp.o
-
-.PHONY : mattanTests/SampleClient.o
-
-# target to build an object file
-mattanTests/SampleClient.cpp.o:
-	$(MAKE) -f CMakeFiles/HUJI_OS_EX3.dir/build.make CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.o
-.PHONY : mattanTests/SampleClient.cpp.o
-
-mattanTests/SampleClient.i: mattanTests/SampleClient.cpp.i
-
-.PHONY : mattanTests/SampleClient.i
-
-# target to preprocess a source file
-mattanTests/SampleClient.cpp.i:
-	$(MAKE) -f CMakeFiles/HUJI_OS_EX3.dir/build.make CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.i
-.PHONY : mattanTests/SampleClient.cpp.i
-
-mattanTests/SampleClient.s: mattanTests/SampleClient.cpp.s
-
-.PHONY : mattanTests/SampleClient.s
-
-# target to generate assembly for a file
-mattanTests/SampleClient.cpp.s:
-	$(MAKE) -f CMakeFiles/HUJI_OS_EX3.dir/build.make CMakeFiles/HUJI_OS_EX3.dir/mattanTests/SampleClient.cpp.s
-.PHONY : mattanTests/SampleClient.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -323,25 +296,22 @@ help:
 	@echo "... depend"
 	@echo "... install/strip"
 	@echo "... install/local"
-	@echo "... edit_cache"
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... HUJI_OS_EX3"
+	@echo "... edit_cache"
 	@echo "... MapReduceFramework"
+	@echo "... mattanTester"
 	@echo "... gmock_main"
 	@echo "... gmock"
 	@echo "... gtest_main"
 	@echo "... gtest"
-	@echo "... Barrier/Barrier.o"
-	@echo "... Barrier/Barrier.i"
-	@echo "... Barrier/Barrier.s"
+	@echo "... Barrier/barrier.o"
+	@echo "... Barrier/barrier.i"
+	@echo "... Barrier/barrier.s"
 	@echo "... MapReduceFramework.o"
 	@echo "... MapReduceFramework.i"
 	@echo "... MapReduceFramework.s"
-	@echo "... mattanTests/SampleClient.o"
-	@echo "... mattanTests/SampleClient.i"
-	@echo "... mattanTests/SampleClient.s"
 .PHONY : help
 
 

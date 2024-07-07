@@ -2,7 +2,7 @@ CC=g++
 CXX=g++
 RANLIB=ranlib
 
-LIBSRC= Barrier.cpp  MapReduceFramework.cpp
+LIBSRC= Barrier.cpp Barrier.h MapReduceFramework.cpp
 LIBOBJ=$(LIBSRC:.cpp=.o)
 
 INCS=-I.
